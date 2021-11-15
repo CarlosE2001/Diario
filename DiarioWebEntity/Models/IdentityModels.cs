@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using DiarioWebEntity.Models;
 
 namespace DiarioWebEntity.Models
 {
@@ -20,6 +21,10 @@ namespace DiarioWebEntity.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<Autor> Autor { get; set; }
+        public DbSet<Categoria> Categoria { get; set; }
+        public DbSet<Publicacion> Publicacion { get; set; }
+        public DbSet<Comentario> Comentario { get; set; }
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
