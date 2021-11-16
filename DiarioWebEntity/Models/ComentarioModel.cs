@@ -11,10 +11,8 @@ namespace DiarioWebEntity.Models
 {
     public class Comentario
     {
-        [Key]
         public int Id { get; set; }
         public Publicacion Publicacion { get; set; }
-        [ForeignKey("Publicacion")]
         public int IdPublicacionPKFK { get; set; }
         public string Texto { get; set; }
     }

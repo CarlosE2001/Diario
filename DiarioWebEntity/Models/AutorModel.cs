@@ -11,9 +11,7 @@ namespace DiarioWebEntity.Models
 {
     public class Autor
     {
-        [Key]
         public int Id { get; set; }
         public string NombreCompleto { get; set; }
-        public ICollection<Publicacion> Publicaciones { get; set; }
     }
 }

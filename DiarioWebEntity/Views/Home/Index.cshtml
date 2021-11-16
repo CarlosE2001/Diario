@@ -11,17 +11,21 @@
 <div class="container" style="margin: 20px 10px 20px 10px;">
     <div class="row">
         <div class="col-10">
-            @for (int i = 0; i < 15; i++) {
+            @for (int i = 0; i < ViewBag.pubSize; i++) {
             <div style="margin: 20px 0 20px 0;">
-                <h3>Un excelente titulo 18/02/21</h3>
-                <img src="https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png?w=640" class="img-fluid w-100" style="border: solid 1px black" />
+                <h3>@ViewBag.publicaciones[i].Titulo | @ViewBag.publicaciones[i].Fecha</h3>
+                <img src="@ViewBag.publicaciones[i].LinkImg" class="img-fluid w-100" style="border: solid 1px black" />
                 <p style="margin: 3px 0 3px 0;">
-                    Praesent id metus massa, ut blandit odio. Proin quis tortor orci. Etiam at risus et justo dignissim congue. Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc eu ullamcorper orci. Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque faucibus vestibulum. Nulla at nulla justo, eget luctus.
+                    @ViewBag.publicaciones[i].Resumen
                 </p>
                 <div class="card">
                     <div class="card-body">
                         <p>
-                            <strong>Autor:</strong> Carlos Espinoza  |  <strong>Comentarios</strong>: 3
+                            @if (ViewBag.comentarios.ContainsKey(ViewBag.publicaciones[i].Id)) {
+                                <strong>Autor:</strong> @ViewBag.autores[ViewBag.publicaciones[i].AutorFK]  <strong>Comentarios: </strong>  @ViewBag.comentarios[ViewBag.publicaciones[i].Id]
+                            } else {
+                                <strong>Autor:</strong> @ViewBag.autores[ViewBag.publicaciones[i].AutorFK] <strong>Comentarios: 0</strong> 
+                            }
                         </p>
                     </div>
                     

@@ -11,9 +11,7 @@ namespace DiarioWebEntity.Models
 {
     public class Categoria
     {
-        [Key]
         public int Id { get; set; }
         public string NombreCategoria { get; set; }
-        public ICollection<Publicacion> Publicaciones { get; set; }
     }
 }
