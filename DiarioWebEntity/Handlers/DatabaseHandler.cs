@@ -213,6 +213,44 @@ namespace DiarioWebEntity.Handlers {
          * 
         */
 
+
+        /**
+         * 
+         * 
+         * INSERTAR DATOS
+         * 
+         * 
+        */
+
+
+        public bool CreateComment(string text, int idPub) {
+            bool success = false;
+            string query = "INSERT INTO dbo.Comentario(IdPublicacionPKFK,Texto) VALUES (@idPub, @text)";
+            SqlCommand comandoParaConsulta = new SqlCommand(query, connection);
+            SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
+            comandoParaConsulta.Parameters.AddWithValue("@idPub", idPub);
+            comandoParaConsulta.Parameters.AddWithValue("@text", text);
+            success = this.DatabaseQuery(comandoParaConsulta);
+            return success;
+        }
+
+
+        public bool CreatePublication(Publicacion pub) {
+            bool success;
+            string query = "INSERT INTO dbo.Publicacion(Fecha, Titulo, LinkImg, Resumen, AutorFK, CategoriaFK) VALUES(@fecha, @titulo, @linkImg, @resumen, @autorFK, @categoriaFK)";
+            SqlCommand comandoParaConsulta = new SqlCommand(query, connection);
+            SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
+            comandoParaConsulta.Parameters.AddWithValue("@fecha", pub.Fecha);
+            comandoParaConsulta.Parameters.AddWithValue("@titulo", pub.Titulo);
+            comandoParaConsulta.Parameters.AddWithValue("@linkImg", pub.LinkImg);
+            comandoParaConsulta.Parameters.AddWithValue("@resumen", pub.Resumen);
+            comandoParaConsulta.Parameters.AddWithValue("@autorFK", pub.AutorFK);
+            comandoParaConsulta.Parameters.AddWithValue("@categoriaFK", pub.CategoriaFK);
+            success = this.DatabaseQuery(comandoParaConsulta);
+            return success;
+        }
+
+
     }
 
 

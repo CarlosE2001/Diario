@@ -7,54 +7,57 @@
     <h1>Diario Web</h1>
 </div>
 
+<body>
+    <div style="margin: 20px 10px 20px 10px;">
+        <div class="row">
+            <div class="col-8">
+                @foreach (var publicacion in ViewBag.publicaciones) {
+                    <div style="margin: 20px 0 20px 0;">
+                        <h3>
+                            @Html.ActionLink((string)publicacion.Titulo, "ViewPublication", new { id = publicacion.Id }, new { @class = "link" }) | @publicacion.Fecha
+                        </h3>
+                       
 
-<div class="container" style="margin: 20px 10px 20px 10px;">
-    <div class="row">
-        <div class="col-10">
-            @for (int i = 0; i < ViewBag.pubSize; i++) {
-            <div style="margin: 20px 0 20px 0;">
-                <h3>@ViewBag.publicaciones[i].Titulo | @ViewBag.publicaciones[i].Fecha</h3>
-                <img src="@ViewBag.publicaciones[i].LinkImg" class="img-fluid w-100" style="border: solid 1px black" />
-                <p style="margin: 3px 0 3px 0;">
-                    @ViewBag.publicaciones[i].Resumen
-                </p>
-                <div class="card">
-                    <div class="card-body">
-                        <p>
-                            @if (ViewBag.comentarios.ContainsKey(ViewBag.publicaciones[i].Id)) {
-                                <strong>Autor:</strong> @ViewBag.autores[ViewBag.publicaciones[i].AutorFK]  <strong>Comentarios: </strong>  @ViewBag.comentarios[ViewBag.publicaciones[i].Id]
-                            } else {
-                                <strong>Autor:</strong> @ViewBag.autores[ViewBag.publicaciones[i].AutorFK] <strong>Comentarios: 0</strong> 
-                            }
+                        <img src="@publicacion.LinkImg" class="img-fluid w-100" style="border: solid 1px black" />
+                        <p style="margin: 3px 0 3px 0;">
+                            @publicacion.Resumen
                         </p>
+                        <div class="card">
+                            <div class="card-body">
+                                <p>
+                                    @if (ViewBag.comentarios.ContainsKey(publicacion.Id)) {
+                                        <strong>Autor:</strong> @ViewBag.autores[publicacion.AutorFK] <strong>Comentarios: </strong> @ViewBag.comentarios[publicacion.Id]
+                                    } else {
+                                        <strong>Autor:</strong> @ViewBag.autores[publicacion.AutorFK] <strong>Comentarios: 0</strong>
+                                    }
+                                </p>
+                            </div>
+
+                        </div>
                     </div>
-                    
-                </div>
+
+                }
             </div>
-                
-            }
-        </div>
 
-        <div class="panel rounded col-2 bg-secondary text-white" style="margin-top: 30px; max-height: 300px;">
-            <h3>Categorias</h3>
-            <p>
+            <div class="panel rounded col-4 bg-secondary text-white" style="margin-top: 30px; max-height: auto">
+                <h3>Categorias</h3>
                 <ul>
-                    <li>PHP</li>
-                    <li>PHP</li>
-                    <li>PHP</li>
-                    <li>PHP</li>
+                    @foreach (var cat in ViewBag.listaCategorias) {
+                        <li>@cat.NombreCategoria</li>
+                    }
                 </ul>
-            </p>
 
-            <hr />
 
-            <h3>Autores</h3>
-            <p>
+                <hr />
+
+                <h3>Autores</h3>
                 <ul>
-                    <li>Sebas</li>
-                    <li>Carlos</li>
+                    @foreach (var cat in ViewBag.listaAutores) {
+                        <li>@cat.NombreCompleto</li>
+                    }
                 </ul>
-            </p>
+            </div>
         </div>
     </div>
-</div>
+</body>
+

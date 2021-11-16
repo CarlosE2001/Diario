@@ -7,7 +7,7 @@
 
     <ul class="navbar-nav me-auto text-end">
         <li>
-            @Html.ActionLink(User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" , @class ="nav-link text-white" })
+            @Html.ActionLink("ADMINISTRAR", "Administrador", "Home", routeValues: null, htmlAttributes: new { @class ="nav-link text-white" })
         </li>
         <li><a class="nav-link" href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
     </ul>

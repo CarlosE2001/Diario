@@ -25,22 +25,82 @@ namespace DiarioWebEntity.Controllers {
 
             ViewBag.comentarios = comentariosCount;
             ViewBag.categorias = categorias;
+            ViewBag.listaCategorias = handler.GetAllCategorias();
+            ViewBag.listaAutores = handler.GetAllAutors();
             ViewBag.autores = autores;
 
 
             return View();
         }
 
-        public ActionResult About() {
-            ViewBag.Message = "Your application description page.";
+        public  ActionResult ViewPublication(int id) {
+            Publicacion publication = handler.GetPublicacionById(id);
+            Dictionary<int, List<string>> commentsDic = handler.GetCommentsDictionary();
+            ViewBag.publication = publication;
+            ViewBag.Autor = handler.GetAutorById(publication.AutorFK).NombreCompleto;
+            ViewBag.categoria = handler.GetCategoriesDictionary()[publication.CategoriaFK];
+            List<string> comments = new List<string>();
+            if (commentsDic.ContainsKey(publication.Id)) {
+                comments = commentsDic[publication.Id];
+            }
+            ViewBag.comments = comments;
+            return View();
+        }
+
+        public ActionResult AgregarComentario(int id) {
+
+            ViewBag.publication = handler.GetPublicacionById(id);
 
             return View();
         }
 
-        public ActionResult Contact() {
-            ViewBag.Message = "Your contact page.";
+        [Authorize]
+        public ActionResult Administrador() {
+            List<Publicacion> publicaciones = handler.GetAllPublications();
+            Dictionary<int, int> comentariosCount = handler.GetCommentsCountDictionary();
+            Dictionary<int, string> categorias = handler.GetCategoriesDictionary();
+            Dictionary<int, string> autores = handler.GetAutorsDictionary();
+            ViewBag.publicaciones = publicaciones;
+            ViewBag.pubSize = publicaciones.Count();
 
+            int count = comentariosCount[publicaciones[0].Id];
+
+            ViewBag.comentarios = comentariosCount;
+            ViewBag.categorias = categorias;
+            ViewBag.listaCategorias = handler.GetAllCategorias();
+            ViewBag.listaAutores = handler.GetAllAutors();
+            ViewBag.autores = autores;
             return View();
         }
+
+        [HttpPost]
+        public ActionResult AddComment(Comentario comment) {
+            ActionResult view = RedirectToAction("Index", "Home");
+            int pubId = int.Parse(Request.Form["pubId"]);
+            bool success = false;
+            try {
+                success = handler.CreateComment(comment.Texto, pubId);
+            } catch(Exception e) {
+                return view;
+            }
+            return view;
+        }
+
+        [HttpPost]
+        public ActionResult AddPublication(Publicacion pub) {
+            ActionResult view = RedirectToAction("Index", "Home");
+            bool success = false;
+            try {
+                success = handler.CreatePublication(pub);
+            } catch (Exception e) {
+                return view;
+            }
+            return view;
+        }
+
+        public ActionResult AgregarPublicacion() {
+            return View();
+        }
+
     }
 }

@@ -1,0 +1,56 @@
+﻿
+@{
+    ViewBag.Title = "ViewPublication";
+}
+
+<div class="container">
+
+    <div class="card">
+        <div class="card-header">
+            @ViewBag.publication.Titulo | @ViewBag.publication.Fecha
+        </div>
+
+        <div class="card-body">
+
+            <div class="card">
+                <div class="card-body">
+                    <img src="@ViewBag.publication.LinkImg" alt="Alternate Text" class="img-fluid" />
+                </div>
+            </div>
+
+            @ViewBag.publication.Resumen
+
+        </div>
+
+        <div class="card-footer">
+            @ViewBag.Autor
+        </div>
+    </div>
+    <div class="row" style="margin-top: 40px">
+        <div class="col text-start">
+            <h3 >
+                Comentarios
+            </h3>
+        </div>
+
+        <div class="col text-right">
+            @Html.ActionLink("Agregar Comentario", "AgregarComentario", new {id = ViewBag.publication.Id} , new { @class = "btn btn-info" })
+        </div>
+
+    </div>
+    
+    <hr />
+
+    @foreach(var comment in ViewBag.comments) {
+
+        <div class="card" style="margin: 15px 0 15px 0">
+            <div class="card-body bg-light">
+                @comment
+            </div>
+        </div>
+    }
+    
+
+    
+</div>
+

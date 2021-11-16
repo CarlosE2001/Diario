@@ -1,0 +1,28 @@
+﻿@model DiarioWebEntity.Models.Comentario
+@{
+    ViewBag.Title = "AgregarComentario";
+}
+
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            Agregar comentario para: @ViewBag.publication.Titulo
+        </div>
+
+        <div class="card-body">
+            @using (Html.BeginForm("AddComment", "Home", FormMethod.Post, new { enctype = "multipart/form-data" })) {
+                @Html.AntiForgeryToken()
+
+                @Html.LabelFor(model => model.Texto)
+                @Html.TextAreaFor(model => model.Texto, new { @class = "form-control", @rows = "5" })
+                @Html.ValidationMessageFor(model => model.Texto, "", new { @class = "text-danger" })
+                
+                <input type="text" name="pubId" value="@ViewBag.publication.Id" style="display: none" />
+                <input type="submit" value="Agregar Comentario" class="btn btn-success" />
+
+            }
+        </div>
+
+    </div>
+</div>
+

@@ -1,0 +1,130 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+
+<div class="card text-center bg-light">
+    <h1>VISTA DEL ADMINISTRADOR</h1>
+</div>
+
+<body>
+    <div style="margin: 20px 10px 20px 10px;">
+        <div class="card text-center">
+            @Html.ActionLink("Agregar Publicacion", "AgregarPublicacion", new { @class = "btn btn-success" })
+        </div>
+        <div class="row">
+            <div class="col-8">
+                @foreach (var publicacion in ViewBag.publicaciones) {
+                    <div style="margin: 20px 0 20px 0;">
+
+                        <h3>
+                            @Html.ActionLink((string)publicacion.Titulo, "ViewPublication", new { id = publicacion.Id }, new { @class = "link" }) | @publicacion.Fecha
+                        </h3>
+
+                        <img src="@publicacion.LinkImg" class="img-fluid w-100" style="border: solid 1px black" />
+                        <p style="margin: 3px 0 3px 0;">
+                            @publicacion.Resumen
+                        </p>
+                        <div class="card">
+                            <div class="card-body">
+                                <p>
+                                    @if (ViewBag.comentarios.ContainsKey(publicacion.Id)) {
+                                        <strong>Autor:</strong> @ViewBag.autores[publicacion.AutorFK] <strong>Comentarios: </strong> @ViewBag.comentarios[publicacion.Id]
+                                    } else {
+                                        <strong>Autor:</strong> @ViewBag.autores[publicacion.AutorFK] <strong>Comentarios: 0</strong>
+                                    }
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                }
+            </div>
+
+            <div class="col-4 bg-secondary text-white justify-content-center" style="margin-top: 30px; max-height: 600px;">
+                <h3>Categorias</h3>
+                <ul>
+                    @foreach (var cat in ViewBag.listaCategorias) {
+                        <li>@cat.NombreCategoria</li>
+                    }
+                </ul>
+
+
+                <hr />
+
+                <h3>Autores</h3>
+                <ul>
+                    @foreach (var cat in ViewBag.listaAutores) {
+                        <li>@cat.NombreCompleto</li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <button style="display: none;" id="modalToggle" class="btn btn-success" onclick="" value="0" data-toggle="modal" data-target="#calendarEventModal"> Ver funcionarios <span id="count"></span> </button>
+
+    <div class="modal fade" id="calendarEventModal" tabindex="-1" role="dialog" aria-labelledby="calendarEventModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="calendarEventLongTitle">
+                        <strong>
+
+                        </strong>
+                    </h3>
+                    <button type="button" class="close btn btn-danger" style="margin: 1px;" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="calendarEventDescription">
+                </div>
+                <div class="card-footer text-center">
+                    <a id="linkButton" class="btn btn-success" href="#" target="_blank">Ver más</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+
+<script>
+    async function getComments() {
+        let url = ""
+        const response = await fetch(url);
+        const comments = await response.json();
+
+        triggerModal(comments);
+    }
+
+    function triggerModal(values) {
+
+        let titleContainerId = "#calendarEventLongTitle";
+        let descriptionContainerId = "#calendarEventDescription";
+        let linkButtonId = "#linkButton";
+        let buttonId = "#modalToggle";
+
+        let title = document.querySelector(titleContainerId);
+        let description = document.querySelector(descriptionContainerId);
+        let linkButton = document.querySelector(linkButtonId);
+        let button = document.querySelector(buttonId);
+
+        title.innerHTML = "<strong>Comentarios</strong>;
+
+        let comments = "";
+        values.forEach(value => {
+            comments += "<div class=""card""></div>"
+        })
+
+        
+        description.innerHTML = verifyField(event.extendedProps.description, "Sin descripción");
+        linkButton.setAttribute("href", verifyField(event.extendedProps.link, "/EducationalActivity/ListActivities"));
+
+        button.click();
+    }
+</script>
+
+

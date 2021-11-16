@@ -1,0 +1,83 @@
+﻿@model DiarioWebEntity.Models.Publicacion
+
+<body>
+
+    <div class="container">
+
+
+        <div class="card">
+            <div class="card-header">
+                Ingrese los datos de su publicación
+            </div>
+
+            <div class="card-body">
+                @using (Html.BeginForm("AddPublication", "Home", FormMethod.Post, new { enctype = "multipart/form-data" })) {
+                    @Html.AntiForgeryToken()
+
+                    <div class="row">
+
+                        <div class="col">
+                            @Html.LabelFor(model => model.Titulo)
+                            @Html.TextBoxFor(model => model.Titulo, new { @class = "form-control w-100" })
+                            @Html.ValidationMessageFor(model => model.Titulo, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="col">
+                            @Html.LabelFor(model => model.Fecha)
+                            @Html.TextBoxFor(model => model.Fecha, new { @class = "form-control w-100" })
+                            @Html.ValidationMessageFor(model => model.Fecha, "", new { @class = "text-danger" })
+                        </div>
+
+                    </div>
+
+
+                    <div class="row">
+
+                        <div class="col">
+                            @Html.LabelFor(model => model.LinkImg)
+                            @Html.TextBoxFor(model => model.LinkImg, new { @class = "form-control w-100" })
+                            @Html.ValidationMessageFor(model => model.LinkImg, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="col">
+                            @Html.LabelFor(model => model.AutorFK)
+                            @Html.TextBoxFor(model => model.AutorFK, new { @type = "number", @class = "form-control w-100" })
+                            @Html.ValidationMessageFor(model => model.AutorFK, "", new { @class = "text-danger" })
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+
+
+                        <div class="col">
+                            @Html.LabelFor(model => model.CategoriaFK)
+                            @Html.TextBoxFor(model => model.CategoriaFK, new { @type="number", @class = "form-control w-100" })
+                            @Html.ValidationMessageFor(model => model.CategoriaFK, "", new { @class = "text-danger" })
+                        </div>
+
+                    </div>
+
+
+                    <div class="row">
+
+                        <div class="col">
+                            @Html.LabelFor(model => model.Resumen)
+                            @Html.TextAreaFor(model => model.Resumen, new {  @class = "form-control w-100" })
+                            @Html.ValidationMessageFor(model => model.Resumen, "", new { @class = "text-danger" })
+                        </div>
+
+                    </div>
+
+                    <div class="text-end" style="margin: 10px auto 10px auto;">
+                        <input type="submit" value="Agregar Publicacion" class="btn btn-success" />
+                    </div>
+                    
+                }
+            </div>
+        </div>
+
+
+    </div>
+
+</body>
