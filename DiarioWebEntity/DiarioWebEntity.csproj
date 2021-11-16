@@ -261,6 +261,8 @@
     <Content Include="Views\Home\AgregarComentario.cshtml" />
     <Content Include="Views\Home\Administrador.cshtml" />
     <Content Include="Views\Home\AgregarPublicacion.cshtml" />
+    <Content Include="Views\Home\ViewAutor.cshtml" />
+    <Content Include="Views\Home\ViewCategoria.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

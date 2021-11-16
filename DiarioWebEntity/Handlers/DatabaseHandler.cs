@@ -251,6 +251,45 @@ namespace DiarioWebEntity.Handlers {
         }
 
 
+        public List<Comentario> GetCommentByPubId(int idPub) {
+            List<Comentario> comments = new List<Comentario>();
+            string query = "SELECT * FROM Comentario WHERE IdPublicacionPKFK = " + idPub;
+            DataTable resultingTable = CreateTableFromQuery(query);
+            foreach(DataRow row in resultingTable.Rows) {
+                comments.Add(CreateComentarioModelFromRow(row));
+            }
+            return comments;
+        }
+
+
+        public List<Publicacion> GetPublicacionesFromAutor(int id) {
+            List<Publicacion> publicaciones = new List<Publicacion>();
+            string query = "SELECT * FROM Publicacion WHERE Publicacion.AutorFK = " + id;
+            DataTable resultingTable = CreateTableFromQuery(query);
+            foreach (DataRow row in resultingTable.Rows) {
+                publicaciones.Add(CreatePublicacionModelFromRow(row));
+            }
+            return publicaciones;
+        }
+        public List<Publicacion> GetPublicacionesFromCategoria(int id) {
+            List<Publicacion> publicaciones = new List<Publicacion>();
+            string query = "SELECT * FROM Publicacion WHERE Publicacion.CategoriaFK= " + id;
+            DataTable resultingTable = CreateTableFromQuery(query);
+            foreach (DataRow row in resultingTable.Rows) {
+                publicaciones.Add(CreatePublicacionModelFromRow(row));
+            }
+            return publicaciones;
+        }
+
+        public Categoria GetCategoriaById(int id) {
+            Categoria categoria;
+            string query = "SELECT * FROM Categoria WHERE Categoria.Id = " + id;
+            DataTable resultingTable = CreateTableFromQuery(query);
+            categoria = CreateCategoriaModelFromRow(resultingTable.Rows[0]);
+            return categoria;
+        }
+
+
     }
 
 

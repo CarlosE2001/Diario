@@ -43,7 +43,7 @@
                 <h3>Categorias</h3>
                 <ul>
                     @foreach (var cat in ViewBag.listaCategorias) {
-                        <li>@cat.NombreCategoria</li>
+                        <li>@Html.ActionLink((string)cat.NombreCategoria, "ViewCategoria", new { id = cat.Id }, new { @class = "link" })</li>
                     }
                 </ul>
 
@@ -52,12 +52,19 @@
 
                 <h3>Autores</h3>
                 <ul>
-                    @foreach (var cat in ViewBag.listaAutores) {
-                        <li>@cat.NombreCompleto</li>
+                    @foreach (var aut in ViewBag.listaAutores) {
+                        <li>@Html.ActionLink((string)aut.NombreCompleto, "ViewAutor", new { id = aut.Id }, new { @class = "link" })</li>
                     }
                 </ul>
             </div>
         </div>
     </div>
+
+    <script>
+        function checkSize(maxSize) {
+
+        }
+    </script>
+
 </body>
 

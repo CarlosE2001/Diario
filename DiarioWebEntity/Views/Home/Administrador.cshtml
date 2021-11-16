@@ -30,6 +30,10 @@
                                 <p>
                                     @if (ViewBag.comentarios.ContainsKey(publicacion.Id)) {
                                         <strong>Autor:</strong> @ViewBag.autores[publicacion.AutorFK] <strong>Comentarios: </strong> @ViewBag.comentarios[publicacion.Id]
+
+                                        <a  onclick="getComments('hola')" >AJAX</a>
+                                        @*@Html.Raw(Url.Action("GetComments", "Home", new { idPub = publicacion.Id }))*@
+
                                     } else {
                                         <strong>Autor:</strong> @ViewBag.autores[publicacion.AutorFK] <strong>Comentarios: 0</strong>
                                     }
@@ -89,42 +93,49 @@
         </div>
     </div>
 
+    <script>
+
+        function getComments(ajax) {
+            console.log(ajax);
+        }
+
+        async function getCommentsAjax(ajaxUrl) {
+            console.log(ajaxUrl);
+            let url = ajaxUrl;
+            const response = await fetch(url);
+            const comments = await response.json();
+
+            triggerModal(comments);
+        }
+
+        function triggerModal(values) {
+
+            let titleContainerId = "#calendarEventLongTitle";
+            let descriptionContainerId = "#calendarEventDescription";
+            let linkButtonId = "#linkButton";
+            let buttonId = "#modalToggle";
+
+            let title = document.querySelector(titleContainerId);
+            let description = document.querySelector(descriptionContainerId);
+            let linkButton = document.querySelector(linkButtonId);
+            let button = document.querySelector(buttonId);
+
+            title.innerHTML = "<strong>Comentarios</strong>;
+
+            let comments = "";
+            values.forEach(value => {
+                comments += "<div class=""card"">" + value.Texto + "</div>"
+            })
+
+            description.innerHTML = comments;
+
+            button.click();
+        }
+    </script>
+
+
 </body>
 
-<script>
-    async function getComments() {
-        let url = ""
-        const response = await fetch(url);
-        const comments = await response.json();
 
-        triggerModal(comments);
-    }
-
-    function triggerModal(values) {
-
-        let titleContainerId = "#calendarEventLongTitle";
-        let descriptionContainerId = "#calendarEventDescription";
-        let linkButtonId = "#linkButton";
-        let buttonId = "#modalToggle";
-
-        let title = document.querySelector(titleContainerId);
-        let description = document.querySelector(descriptionContainerId);
-        let linkButton = document.querySelector(linkButtonId);
-        let button = document.querySelector(buttonId);
-
-        title.innerHTML = "<strong>Comentarios</strong>;
-
-        let comments = "";
-        values.forEach(value => {
-            comments += "<div class=""card""></div>"
-        })
-
-        
-        description.innerHTML = verifyField(event.extendedProps.description, "Sin descripción");
-        linkButton.setAttribute("href", verifyField(event.extendedProps.link, "/EducationalActivity/ListActivities"));
-
-        button.click();
-    }
-</script>
 
 

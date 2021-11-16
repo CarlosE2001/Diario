@@ -73,6 +73,11 @@ namespace DiarioWebEntity.Controllers {
             return View();
         }
 
+        public JsonResult GetComments(int idPub) {
+            List<Comentario> comments = handler.GetCommentByPubId(idPub);
+            return Json(comments, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         public ActionResult AddComment(Comentario comment) {
             ActionResult view = RedirectToAction("Index", "Home");
@@ -100,6 +105,25 @@ namespace DiarioWebEntity.Controllers {
 
         public ActionResult AgregarPublicacion() {
             return View();
+        }
+
+
+        public ActionResult ViewAutor(int id) {
+            Autor autor = handler.GetAutorById(id);
+            List<Publicacion> publicaciones = handler.GetPublicacionesFromAutor(id);
+            ViewBag.Autor = autor;
+            ViewBag.publicaciones = publicaciones;
+            return View();
+
+        }
+
+        public ActionResult ViewCategoria(int id) {
+            Categoria categoria = handler.GetCategoriaById(id);
+            List<Publicacion> publicaciones = handler.GetPublicacionesFromCategoria(id);
+            ViewBag.Categoria = categoria;
+            ViewBag.publicaciones = publicaciones;
+            return View();
+
         }
 
     }
